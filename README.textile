@@ -1,0 +1,78 @@
+h1. codeigniter-paypal-ipn
+
+h2. Overview
+
+codeigniter-paypal-ipn is a CodeIgniter library for working with the PayPal IPN (Instant
+Payment Notification) service. The library acts as a listener for the PayPal IPN service
+and logs the orders to your database (the release version depends on Doctrine 1.2). 
+
+h2. Description
+
+This library focuses on the "post-payment" workflow, i.e. the processing required once
+the payment has been made and PayPal has posted an Instant Payment Notification call to
+the IPN listener (aka your CodeIgniter IPN controller).
+
+This library handles:
+* Validating the IPN call
+* Logging the IPN call
+* Extracting the order and line item information from the IPN call
+* Interpreting PayPal's payment status
+* Storing the order and line item in the database
+
+All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
+post-payment workflow (e.g. sending emails) is left as an exercise to the reader.
+
+h2. Dependencies
+
+The initial release version depends on Doctrine (tested with 1.2.3). If you are not
+using Doctrine with CodeIgniter already, I highly recommend it - see the CodeIgniter
+guide, "Using Doctrine with Code Igniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/
+for more details
+
+h2. Installation
+
+Download all of the files from the doctrine1.2 folder and deploy them into your CodeIgniter
+installation following the same folder structure as found in GitHub. To create the MySQL tables
+required by codeigniter-paypal-ipn, run the SQL file found in the sql folder against your db.
+
+h2. Usage
+
+An example of how to use codeigniter-paypal-ipn can be found in controllers/example.php
+
+h2. Credits
+
+This library is inspired by:
+* Ran Aroussi's "PayPal_Lib for CodeIgniter":http://aroussi.com/ci/ (which I used for some time before writing my own)
+* Peter Butler's original PayPal IPN Controller for CakePHP:http://www.studiocanaria.com/articles/paypal_ipn_controller_for_cakephp (for giving me the idea to save the orders in the first place)
+* @webtechnik's CakePHP-PayPal-IPN Plugin:https://github.com/webtechnick/CakePHP-Paypal-IPN-Plugin (for the really tidy configuration settings)
+
+h2. Disclaimer and Warning
+
+The author Alex Dean does not accept any liability for any processing errors made by
+codeigniter-paypal-ipn, or any financial losses incurred through its use.
+
+In particular, this library does *not* fulfil the PayPal IPN requirement to _"verify that the
+payment amount actually matches what you intend to charge. Although not technically an IPN
+issue, if you do not encrypt buttons, it is possible for someone to capture the original
+transmission and change the price. Without this check, you could accept a lesser payment
+than what you expected."_ (This verification step is out of scope for this library because
+it would require integration with your product catalogue.)
+
+h2. Copyright
+
+codeigniter-paypal-ipn is copyright (c) 2011 Alexander Dean, alex@keplarllp.com
+
+h2. License
+
+codeigniter-paypal-ipn is free software: you can redistribute it and/or modify it under the
+terms of the GNU Affero General Public License as published by the Free Software Foundation,
+either version 3 of the License, or (at your option) any later version.
+
+codeigniter-paypal-ipn is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along with
+codeigniter-paypal-ipn. If not, see <http://www.gnu.org/licenses/>.
+
+
