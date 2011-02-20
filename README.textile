@@ -26,7 +26,7 @@ h2. Dependencies
 
 The initial release version depends on Doctrine (tested with 1.2.3). If you are not
 using Doctrine with CodeIgniter already, I highly recommend it - see the CodeIgniter
-guide, "Using Doctrine with Code Igniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ for more details
+guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ for more details
 
 h2. Installation
 
@@ -41,9 +41,9 @@ An example of how to use codeigniter-paypal-ipn can be found in controllers/exam
 h2. Credits
 
 This library is inspired by:
-* Ran Aroussi's "PayPal_Lib for CodeIgniter":http://aroussi.com/ci/ (which I used for some time before writing my own)
-* Peter Butler's original "PayPal IPN Controller for CakePHP":http://www.studiocanaria.com/articles/paypal_ipn_controller_for_cakephp (for giving me the idea to save the orders in the first place)
-* @webtechnik's "CakePHP-PayPal-IPN Plugin":https://github.com/webtechnick/CakePHP-Paypal-IPN-Plugin (for the really tidy configuration settings)
+* Ran Aroussi's "PayPal_Lib for CodeIgniter":http://codeigniter.com/wiki/PayPal_Lib/ (which I used for some time before writing my own)
+* Peter Butler's original "PayPal IPN Controller for CakePHP":http://www.studiocanaria.com/articles/paypal_ipn_controller_for_cakephp (for giving me the initial ideas around in-database storage of the orders)
+* @webtechnik's "CakePHP-PayPal-IPN Plugin":https://github.com/webtechnick/CakePHP-Paypal-IPN-Plugin (for the tidy configuration settings)
 
 h2. Disclaimer and Warning
 
@@ -72,6 +72,6 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License along with
-codeigniter-paypal-ipn. If not, see <http://www.gnu.org/licenses/>.
+codeigniter-paypal-ipn. If not, see "http://www.gnu.org/licenses/":http://www.gnu.org/licenses/.
 
 
