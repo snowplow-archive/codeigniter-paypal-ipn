@@ -26,7 +26,9 @@ h2. Dependencies
 
 The initial release version depends on Doctrine (tested with 1.2.3). If you are not
 using Doctrine with CodeIgniter already, I highly recommend it - see the CodeIgniter
-guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ for more details
+guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ for more details.
+
+If you would like a version which doesn't depend on Doctrine, please vote up "this issue":https://github.com/orderly/codeigniter-paypal-ipn/issues/1 so I know to prioritise this.
 
 h2. Installation
 
