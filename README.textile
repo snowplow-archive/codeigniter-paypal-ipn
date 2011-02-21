@@ -37,6 +37,8 @@ Download all of the files from the doctrine1.2 folder and deploy them into your 
 installation following the same folder structure as found in GitHub. To create the MySQL tables
 required by codeigniter-paypal-ipn, run the SQL file found in the /sql folder against your db.
 
+Finally, update your sandbox and production variables as found in config/paypal_ipn.php
+
 h2. Usage
 
 An example of how to use codeigniter-paypal-ipn can be found in controllers/example.php
