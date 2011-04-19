@@ -56,7 +56,7 @@
  * @author      Alex Dean <alex@keplarllp.com>
  * @link        https://github.com/orderly/codeigniter-paypal-ipn
  * @copyright   Copyright (c) 2011 Alex Dean
- * @version     0.1
+ * @version     0.2
  */
 
 class PayPal_IPN
