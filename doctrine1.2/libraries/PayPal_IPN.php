@@ -54,7 +54,7 @@
  * @subpackage  Libraries
  * @category    Commerce
  * @author      Alex Dean <alex@keplarllp.com>
- * @link		https://github.com/orderly/codeigniter-paypal-ipn
+ * @link        https://github.com/orderly/codeigniter-paypal-ipn
  * @copyright   Copyright (c) 2011 Alex Dean
  * @version     0.1
  */
