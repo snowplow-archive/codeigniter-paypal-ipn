@@ -43,7 +43,7 @@
  *
  * All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
  * post-payment workflow (e.g. sending emails) is left as an exercise to the reader.
- * 
+ *
  * This library is inspired by:
  *  - Ran Aroussi's PayPal_Lib for CodeIgniter, http://aroussi.com/ci/
  *  - Micah Carrick's Paypal PHP class, http://www.micahcarrick.com
@@ -53,23 +53,10 @@
  * @package     CodeIgniter
  * @subpackage  Libraries
  * @category    Commerce
- * @author      Alexander Dean <alex@keplarllp.com>
- * @link	https://github.com/orderly/codeigniter-paypal-ipn
+ * @author      Alex Dean <alex@keplarllp.com>
+ * @link		https://github.com/orderly/codeigniter-paypal-ipn
  * @copyright   Copyright (c) 2011 Alex Dean
  * @version     0.1
- * 
- * This file is part of codeigniter-paypal-ipn
- * 
- * codeigniter-paypal-ipn is free software: you can redistribute it and/or modify it under the
- * terms of the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * 
- * codeigniter-paypal-ipn is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- * PURPOSE. See the GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License along with
- * codeigniter-paypal-ipn. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class PayPal_IPN
@@ -138,16 +125,7 @@ class PayPal_IPN
             // If we're in debugging mode, then we cache this POST data in the log for potential use later
             if ($this->debug)
             {
-                if (!($cache = Doctrine::getTable('IpnLog')->findOneByListener_nameAndTransaction_type('IPN', 'cache')))
-                {
-                    $cache = new IpnLog;
-                }
-
-                // Let's log the raw IPN data
-                $cache->listener_name = 'IPN';
-                $cache->transaction_type = 'cache';
-                $cache->detail = serialize($ipnDataRaw);
-                $cache->save();
+                $this->_cacheIPN($ipnDataRaw);
             }
         }
         else
@@ -155,9 +133,8 @@ class PayPal_IPN
             // If we're in debug mode, let's try to get the last cached IPN data instead
             if ($this->debug)
             {
-                if ($cache = Doctrine::getTable('IpnLog')->findOneByListener_nameAndTransaction_type('IPN', 'cache'))
+                if ($ipnDataRaw = $this->_getCachedIPN())
                 {
-                    $ipnDataRaw = unserialize($cache->detail);
                     $usingCache = TRUE;
                 }
                 else
@@ -198,7 +175,7 @@ class PayPal_IPN
         // Now we need to check that we haven't received this message from PayPal before.
         // Luckily we store an md5 hash of each IPN dataset so we can cross-check whether this one is new.
         $ipnDataHash = md5(serialize($ipnDataRaw));
-        if (!$usingCache && ($log = Doctrine::getTable('IpnLog')->findOneByIpn_data_hash($ipnDataHash)))
+        if (!$usingCache && $this->_checkForDuplicates($ipnDataHash))
         {
             $this->_logTransaction('IPN', 'ERROR', 'This is a duplicate call: md5 hash ' . $ipnDataHash . ' already logged');
             return FALSE;
@@ -312,44 +289,9 @@ class PayPal_IPN
         $this->order['discount'] = $totalBeforeDiscount - $this->order['mc_gross'];
     }
 
-    // Function to persist the order and the order items to the database.
-    // This version of the library depends on Doctrine. Note that PayPal
-    // can call a The key thing to
-    // note is that an order may already exist in the system, and this IPN
-    // call is just to update the record - e.g. changing its payment status.
-    // For more on what we're doing here please see the Doctrine model
-    // definitions in /models
-    public function saveOrder()
-    {
-        // First check if the order needs an insert or an update
-        if (!($ipnOrder = Doctrine::getTable('IpnOrder')->findOneByTxn_id($this->ipnData['txn_id']))) // Update
-        {
-            $ipnOrder = new IpnOrder;
-        }
-
-        // Let's save/merge the order down
-        $ipnOrder->merge($this->order);
-        $ipnOrder->save();
-
-        // Now let's save the order's line items
-        foreach ($this->orderItems as $item)
-        {
-            // We need to check if we have already saved this into the database...
-            if (!($ipnOrderItem = Doctrine::getTable('IpnOrderItem')->findOneByItem_nameAndOrder_id($item['item_name'], $ipnOrder->id)))
-            {
-                $ipnOrderItem = new IpnOrderItem;
-            }
-
-            // Let's store all of the fields
-            $ipnOrderItem->merge($item);
-            $ipnOrderItem->order_id = $ipnOrder->id;
-            $ipnOrderItem->save();
-        }
-    }
-
     // Ugly function to deal with the fact that a lot of people don't have curl or similar setup.
     // If you do have curl setup in PHP, and @philsturgeon's cURL library for CodeIgniter installed,
-    // you can replace this function with:
+    // you can replace the contents of this function with:
     // $this->_ci->load->library('curl');
     // $response = $this->_ci->curl->simple_post($url, $postData);
     // // Error logging
@@ -402,10 +344,82 @@ class PayPal_IPN
         return $response;
     }
 
+    /* Code below this point is all ORM-specific. In this version, it is dependent on Doctrine 1.2 */
+
+    // Save an IPN record (insert/update depending on if there is an existing row or not)
+    // Doctrine version
+    function _cacheIPN($ipnDataRaw)
+    {
+        // If we don't already have a cache row,
+        if (!($cache = Doctrine::getTable('IpnLog')->findOneByListener_nameAndTransaction_type('IPN', 'cache')))
+        {
+            $cache = new IpnLog; // Create a new one
+        }
+
+        // Let's log the raw IPN data - either update or insert
+        $cache->listener_name = 'IPN';
+        $cache->transaction_type = 'cache';
+        $cache->detail = serialize($ipnDataRaw);
+        $cache->save();
+    }
+
+    // Retrieve the cached IPN record if there is one, false if there isn't
+    // Doctrine version
+    function _getCachedIPN()
+    {
+        if (!($cache = Doctrine::getTable('IpnLog')->findOneByListener_nameAndTransaction_type('IPN', 'cache')))
+        {
+            return FALSE;
+        }
+        else
+        {
+            return unserialize($cache->detail);
+        }
+    }
+
+    // Check for a duplicate IPN call using the md5 hash
+    function _checkForDuplicates($hash)
+    {
+        return Doctrine::getTable('IpnLog')->findOneByIpn_data_hash($hash);
+    }
+
+    // Function to persist the order and the order items to the database.
+    // Note is that an order may already exist in the system, and this IPN
+    // call is just to update the record - e.g. changing its payment status.
+    // Doctrine version
+    public function saveOrder()
+    {
+        // First check if the order needs an insert or an update
+        if (!($ipnOrder = Doctrine::getTable('IpnOrder')->findOneByTxn_id($this->ipnData['txn_id']))) // Update
+        {
+            $ipnOrder = new IpnOrder;
+        }
+
+        // Let's save/merge the order down
+        $ipnOrder->merge($this->order);
+        $ipnOrder->save();
+
+        // Now let's save the order's line items
+        foreach ($this->orderItems as $item)
+        {
+            // We need to check if we have already saved this into the database...
+            if (!($ipnOrderItem = Doctrine::getTable('IpnOrderItem')->findOneByItem_nameAndOrder_id($item['item_name'], $ipnOrder->id)))
+            {
+                $ipnOrderItem = new IpnOrderItem;
+            }
+
+            // Let's store all of the fields
+            $ipnOrderItem->merge($item);
+            $ipnOrderItem->order_id = $ipnOrder->id;
+            $ipnOrderItem->save();
+        }
+    }
+
     // The transaction logger. Currently tracks:
     // - Successful and failed calls by the PayPal IPN
     // - Successful and failed calls by one or more third-party APIs
     // - (In sandbox mode) Caches the last transaction fields so we can run the IPN script directly
+    // Doctrine version
     function _logTransaction($listenerName, $transactionStatus, $transactionMessage, $ipnResponse = null)
     {
         // Store the standard log information
