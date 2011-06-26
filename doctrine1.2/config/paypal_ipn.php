@@ -24,7 +24,7 @@
 */
 
 // Set this to TRUE or FALSE
-$config['paypal_ipn_use_live_settings'] = (constant('TYCHO_APP_ENV') == 'prod');
+$config['paypal_ipn_use_live_settings'] = FALSE;
 
 // Constants for the live environment
 $config['paypal_ipn_live_settings'] = array(
@@ -38,7 +38,7 @@ $config['paypal_ipn_live_settings'] = array(
 
 // Constants for the sandbox environment
 $config['paypal_ipn_sandbox_settings'] = array(
-    'email' => 'system_CHANGME_biz@CHANGEME.com',
+    'email' => 'system_CHANGEME_biz@CHANGEME.com',
     'url' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
     'debug' => TRUE
 );
