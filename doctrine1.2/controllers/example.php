@@ -51,7 +51,7 @@ class Example extends Controller {
                 $emailBody = $this->smarty->view('ecommerce/confirmation_email.tpl', $data, TRUE); // You'll have to create your own email template using Smarty, Twig or similar
 
                 // Finish configuring email contents and send.
-                $this->email->to($data['payer_email'], ($data['first_name'] . ' ' . $data['first_name']));
+                $this->email->to($data['payer_email'], ($data['first_name'] . ' ' . $data['last_name']));
                 $this->email->bcc('sales@CHANGEME.com');
                 $this->email->from('support@CHANGEME.com', 'CHANGEME');
                 $this->email->subject('Order confirmation');
