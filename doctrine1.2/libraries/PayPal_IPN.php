@@ -378,6 +378,7 @@ class PayPal_IPN
     }
 
     // Check for a duplicate IPN call using the md5 hash
+    // Doctrine version
     function _checkForDuplicates($hash)
     {
         return Doctrine::getTable('IpnLog')->findOneByIpn_data_hash($hash);
