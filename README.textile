@@ -4,7 +4,7 @@ h2. Overview
 
 codeigniter-paypal-ipn is a CodeIgniter library for working with the PayPal IPN (Instant
 Payment Notification) service. The library acts as a listener for the PayPal IPN service
-and logs the orders to your database (the release version depends on Doctrine 1.2). 
+and logs the orders to your database using either Doctrine or CodeIgniter active record. 
 
 h2. Description
 
@@ -19,29 +19,33 @@ This library handles:
 * Interpreting PayPal's payment status
 * Storing the order and line item in the database
 
+Note that this library currently supports the web_accept and cart transaction types; order
+refunds are not currently supported.
+
 All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
 post-payment workflow (e.g. sending emails) is left as an exercise to the reader.
 
 h2. Dependencies
 
-The initial release version depends on Doctrine (tested with 1.2.3). If you are not
-using Doctrine with CodeIgniter already, I highly recommend it - see the CodeIgniter
-guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ for more details.
-
-If you would like a version which doesn't depend on Doctrine, please vote up "this issue":https://github.com/orderly/codeigniter-paypal-ipn/issues/1
-so I know to prioritise this.
+There are two versions supplied: one using CodeIgniter's modified version of the Active 
+Record Database Pattern, and one using Doctrine (tested with 1.2.3). For the second option
+you might find the CodeIgniter guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ helpful background.
 
 h2. Installation
 
-Download all of the files from the doctrine1.2 folder and deploy them into your CodeIgniter
-installation following the same folder structure as found in GitHub. To create the MySQL tables
-required by codeigniter-paypal-ipn, run the SQL file found in the /sql folder against your db.
+Download all of the files from the @common@ folder and deploy them into your CodeIgniter
+installation following the same folder structure as found in GitHub. Then choose between
+the @activerecord@ and @doctrine1.2@ folder, and deploy those files into your CodeIgniter
+installation as well.
 
-Finally, update your sandbox and production variables as found in config/paypal_ipn.php
+To create the MySQL tables required by codeigniter-paypal-ipn, run the SQL file found
+in the @common/sql@ folder against your db.
+
+Finally, update your sandbox and production variables as found in @config/paypal_ipn.php@
 
 h2. Usage
 
-An example of how to use codeigniter-paypal-ipn can be found in controllers/example.php
+An example of how to use codeigniter-paypal-ipn can be found in @controllers/example.php@
 
 h2. Credits
 
@@ -61,6 +65,9 @@ issue, if you do not encrypt buttons, it is possible for someone to capture the 
 transmission and change the price. Without this check, you could accept a lesser payment
 than what you expected."_ (This verification step is out of scope for this library because
 it would require integration with your product catalogue.)
+
+Additionally this library does *not* properly handle refunds. Typically refunds are stored as
+a new order line in @ipn_orders@ with a negative balance, but even this is not 100% predicatable.
 
 h2. Copyright
 
