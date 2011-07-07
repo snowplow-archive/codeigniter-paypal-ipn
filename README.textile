@@ -33,13 +33,13 @@ you might find the CodeIgniter guide, "Using Doctrine with CodeIgniter":http://c
 
 h2. Installation
 
-Download all of the files from the @common@ folder and deploy them into your CodeIgniter
+To create the MySQL tables required by codeigniter-paypal-ipn, run the SQL file found
+in the @common/sql@ folder against your db.
+
+Download all of the remaining files from the @common@ folder and deploy them into your CodeIgniter
 installation following the same folder structure as found in GitHub. Then choose between
 the @activerecord@ and @doctrine1.2@ folder, and deploy those files into your CodeIgniter
 installation as well.
-
-To create the MySQL tables required by codeigniter-paypal-ipn, run the SQL file found
-in the @common/sql@ folder against your db.
 
 Finally, update your sandbox and production variables as found in @config/paypal_ipn.php@
 
