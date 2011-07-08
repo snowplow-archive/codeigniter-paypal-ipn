@@ -281,7 +281,7 @@ class PayPal_IPN
             $this->orderItems[$i]['mc_handling'] = $this->ipnData['mc_handling' . $i];
             $this->orderItems[$i]['mc_shipping'] = $this->ipnData['mc_shipping' . $i];
             $this->orderItems[$i]['tax'] = (isset($this->ipnData['tax' . $i]) ? $this->ipnData['tax' . $i] : null); // Tax is not always set on an item
-            $this->orderItems[$i]['cost_per_item'] = intval($this->ipnData['mc_gross_' . $i]) / intval($this->ipnData['quantity' . $i]); // Should be fine because quantity can never be 0
+            $this->orderItems[$i]['cost_per_item'] = floatval($this->ipnData['mc_gross_' . $i]) / intval($this->ipnData['quantity' . $i]); // Should be fine because quantity can never be 0
             $totalBeforeDiscount +=  $this->orderItems[$i]['mc_gross'];
         }
 
