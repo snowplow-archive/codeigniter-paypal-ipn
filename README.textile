@@ -29,7 +29,7 @@ h2. Dependencies
 
 There are two versions supplied: one using CodeIgniter's modified version of the Active 
 Record Database Pattern, and one using Doctrine (tested with 1.2.3). For the second option
-you might find the CodeIgniter guide, "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ helpful background.
+you might find the CodeIgniter guide "Using Doctrine with CodeIgniter":http://codeigniter.com/wiki/Using_Doctrine_with_Code_Igniter/ helpful background.
 
 h2. Installation
 
