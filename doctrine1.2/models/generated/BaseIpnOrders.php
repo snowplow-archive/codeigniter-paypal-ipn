@@ -152,7 +152,34 @@ abstract class BaseIpnOrders extends Doctrine_Record
              'notnull' => false,
              'autoincrement' => false,
              ));
-        $this->hasColumn('address_city', 'string', 40, array(
+        $this->hasColumn('protection_eligibility', 'string', 24, array(
+             'type' => 'string',
+             'length' => 24,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             ));
+        $this->hasColumn('charset', 'string', 127, array(
+             'type' => 'string',
+             'length' => 127,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             ));
+		$this->hasColumn('btn_id', 'string', 40, array(
+             'type' => 'string',
+             'length' => 40,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             ));
+		$this->hasColumn('address_city', 'string', 40, array(
              'type' => 'string',
              'length' => 40,
              'fixed' => false,
@@ -903,6 +930,34 @@ abstract class BaseIpnOrders extends Doctrine_Record
              'notnull' => false,
              'autoincrement' => false,
              'scale' => '2',
+             ));
+		$this->hasColumn('shipping_discount', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'scale' => '2',
+             ));
+        $this->hasColumn('ipn_track_id', 'string', 127, array(
+             'type' => 'string',
+             'length' => 127,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             ));
+        $this->hasColumn('transaction_subject', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             'fixed' => false,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
              ));
         $this->hasColumn('created_at', 'timestamp', null, array(
              'type' => 'timestamp',
