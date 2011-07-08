@@ -83,7 +83,7 @@ class PayPal_IPN
     const WAITING = 'WAITING';
     const REJECTED = 'REJECTED';
 
-    // Allowed order fields. No point making this static as arrays can be changed later on anyway.
+    // Allowed order fields. No point making this static as PHP arrays can always be modified later on anyway.
     private $orderFields = array('notify_version', 'verify_sign', 'test_ipn', 'protection_eligibility', 'charset', 'btn_id', 'address_city', 'address_country',
                                  'address_country_code', 'address_name', 'address_state', 'address_status', 'address_street', 'address_zip', 'first_name',
                                  'last_name', 'payer_business_name', 'payer_email', 'payer_id', 'payer_status', 'contact_phone', 'residence_country',
