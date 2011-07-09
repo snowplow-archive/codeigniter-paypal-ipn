@@ -48,7 +48,7 @@ class Example extends Controller {
                 $data['items'] = $this->paypal_ipn->orderItems;
 
                 // Now construct the email
-                $emailBody = $this->smarty->view('ecommerce/confirmation_email.tpl', $data, TRUE); // You'll have to create your own email template using Smarty, Twig or similar
+                $emailBody = $this->smarty->view('confirmation_email.tpl', $data, TRUE); // You'll have to create your own email template using Smarty, Twig or similar
 
                 // Finish configuring email contents and send.
                 $this->email->to($data['payer_email'], ($data['first_name'] . ' ' . $data['last_name']));
