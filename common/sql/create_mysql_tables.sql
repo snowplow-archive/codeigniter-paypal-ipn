@@ -6,17 +6,17 @@
  *  - ipn_order_items records the line items which belong to each order
  *
  * This file is copyright (c) 2011 Alexander Dean, github@keplarllp.com
- * 
+ *
  * This file is part of codeigniter-paypal-ipn
- * 
+ *
  * codeigniter-paypal-ipn is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Affero General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * codeigniter-paypal-ipn is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  * PURPOSE. See the GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * codeigniter-paypal-ipn. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -44,6 +44,9 @@ CREATE TABLE `ipn_orders` (
   notify_version varchar(64) default NULL COMMENT 'IPN Version Number',
   verify_sign varchar(127) default NULL COMMENT 'Encrypted string used to verify the authenticityof the tansaction',
   test_ipn int(11) default NULL,
+  protection_eligibility varchar(24) default NULL COMMENT 'Which type of seller protection the buyer is protected by',
+  charset varchar(127) default NULL COMMENT 'Character set used by PayPal',
+  btn_id varchar(40) default NULL COMMENT 'The PayPal buy button clicked',
   address_city varchar(40) default NULL COMMENT 'City of customers address',
   address_country varchar(64) default NULL COMMENT 'Country of customers address',
   address_country_code varchar(2) default NULL COMMENT 'Two character ISO 3166 country code',
@@ -125,6 +128,9 @@ CREATE TABLE `ipn_orders` (
   case_creation_date varchar(28) default NULL COMMENT 'Date/Time the case was registered',
   order_status enum('PAID', 'WAITING', 'REJECTED') NULL COMMENT 'Additional variable to make payment_status more actionable',
   discount decimal(10,2) default NULL COMMENT 'Additional variable to record the discount made on the order',
+  shipping_discount decimal(10,2) default NULL COMMENT 'Record the discount made on the shipping',
+  ipn_track_id varchar(127) default NULL COMMENT 'Internal tracking variable added in April 2011',
+  transaction_subject varchar(255) default NULL COMMENT 'Describes the product for a button-based purchase',
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
   PRIMARY KEY (id),
