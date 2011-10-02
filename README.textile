@@ -22,6 +22,11 @@ This library handles:
 Note that this library currently supports the web_accept and cart transaction types; order
 refunds are not currently supported.
 
+Also note that this library will not work (will return 500 Internal Server Errors) if
+CodeIgniter's CSRF protection is left on. In a future version of CodeIgniter you will
+however be able to enable CSRF protection but whitelist the IPN action - see this pull
+request for more details: https://github.com/EllisLab/CodeIgniter/pull/236
+
 All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
 post-payment workflow (e.g. sending emails) is left as an exercise to the reader.
 
@@ -40,6 +45,9 @@ Download all of the remaining files from the @common@ folder and deploy them int
 installation following the same folder structure as found in GitHub. Then choose between
 the @activerecord@ and @doctrine1.2@ folder, and deploy those files into your CodeIgniter
 installation as well.
+
+Check that csrf_protection in your CodeIgniter is switched off (disclaimer: the author Alex Dean
+accepts no responsibility for issues arising from disabling csrf_protection).
 
 Finally, update your sandbox and production variables as found in @config/paypal_ipn.php@
 
@@ -68,6 +76,9 @@ it would require integration with your product catalogue.)
 
 Additionally this library does *not* properly handle refunds. Typically refunds are stored as
 a new order line in @ipn_orders@ with a negative balance, but even this is not 100% predicatable.
+
+And finally the author accepts no liability for the recommendation to disable CodeIgniter's CSRF
+protection.
 
 h2. Copyright
 
