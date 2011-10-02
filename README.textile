@@ -23,8 +23,8 @@ Note that this library currently supports the web_accept and cart transaction ty
 refunds are not currently supported.
 
 Also note that this library will not work (will return 500 Internal Server Errors) if
-CodeIgniter's CSRF protection is left on. In a future version of CodeIgniter you will
-however be able to enable CSRF protection but whitelist the IPN action - see this "pull
+CodeIgniter's CSRF protection is left enabled. However, in a future version of CodeIgniter
+you will be able to enable @csrf_protection@ but whitelist the IPN action - see this "pull
 request":https://github.com/EllisLab/CodeIgniter/pull/236 for more details.
 
 All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
