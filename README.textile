@@ -24,8 +24,8 @@ refunds are not currently supported.
 
 Also note that this library will not work (will return 500 Internal Server Errors) if
 CodeIgniter's CSRF protection is left on. In a future version of CodeIgniter you will
-however be able to enable CSRF protection but whitelist the IPN action - see this pull
-request for more details: https://github.com/EllisLab/CodeIgniter/pull/236
+however be able to enable CSRF protection but whitelist the IPN action - see this "pull
+request":https://github.com/EllisLab/CodeIgniter/pull/236 for more details.
 
 All pre-payment functionality (e.g. posting the checkout information to PayPal) and custom
 post-payment workflow (e.g. sending emails) is left as an exercise to the reader.
