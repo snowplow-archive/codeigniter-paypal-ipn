@@ -88,7 +88,7 @@ class PayPal_IPN
                                  'address_country_code', 'address_name', 'address_state', 'address_status', 'address_street', 'address_zip', 'first_name',
                                  'last_name', 'payer_business_name', 'payer_email', 'payer_id', 'payer_status', 'contact_phone', 'residence_country',
                                  'business', 'receiver_email', 'receiver_id', 'custom', 'invoice', 'memo', 'option_name_1', 'option_name_2',
-                                 'option_selection1', 'option_selection2', 'tax decimal', 'auth_id', 'auth_exp', 'auth_amount', 'auth_status',
+                                 'option_selection1', 'option_selection2', 'tax', 'auth_id', 'auth_exp', 'auth_amount', 'auth_status',
                                  'num_cart_items', 'parent_txn_id', 'payment_date', 'payment_status', 'payment_type', 'pending_reason', 'reason_code',
                                  'remaining_settle', 'shipping_method', 'shipping', 'transaction_entity', 'txn_id', 'txn_type', 'exchange_rate',
                                  'mc_currency', 'mc_fee', 'mc_gross', 'mc_handling', 'mc_shipping', 'payment_fee', 'payment_gross', 'settle_amount',
