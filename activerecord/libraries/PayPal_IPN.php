@@ -87,8 +87,7 @@ class PayPal_IPN
     private $orderFields = array('notify_version', 'verify_sign', 'test_ipn', 'protection_eligibility', 'charset', 'btn_id', 'address_city', 'address_country',
                                  'address_country_code', 'address_name', 'address_state', 'address_status', 'address_street', 'address_zip', 'first_name',
                                  'last_name', 'payer_business_name', 'payer_email', 'payer_id', 'payer_status', 'contact_phone', 'residence_country',
-                                 'business', 'receiver_email', 'receiver_id', 'custom', 'invoice', 'memo', 'option_name_1', 'option_name_2',
-                                 'option_selection1', 'option_selection2', 'tax', 'auth_id', 'auth_exp', 'auth_amount', 'auth_status',
+                                 'business', 'receiver_email', 'receiver_id', 'custom', 'invoice', 'memo', 'tax', 'auth_id', 'auth_exp', 'auth_amount', 'auth_status',
                                  'num_cart_items', 'parent_txn_id', 'payment_date', 'payment_status', 'payment_type', 'pending_reason', 'reason_code',
                                  'remaining_settle', 'shipping_method', 'shipping', 'transaction_entity', 'txn_id', 'txn_type', 'exchange_rate',
                                  'mc_currency', 'mc_fee', 'mc_gross', 'mc_handling', 'mc_shipping', 'payment_fee', 'payment_gross', 'settle_amount',
@@ -324,6 +323,15 @@ class PayPal_IPN
             $this->orderItems[$i]['mc_handling'] = isset($this->ipnData['mc_handling' . $suffix]) ? $this->ipnData['mc_handling' . $suffix] : null;
             $this->orderItems[$i]['mc_shipping'] = isset($this->ipnData['mc_shipping' . $suffix]) ? $this->ipnData['mc_shipping' . $suffix] : null;
             $this->orderItems[$i]['tax'] = isset($this->ipnData['tax' . $suffix]) ? $this->ipnData['tax' . $suffix] : null;
+
+            // Set the order item options if any
+            // $count = 7 because PayPal allows you to set a maximum of 7 options per item
+            // Reference: https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables
+            for ($ii = 1, $count = 7; $ii < $count; $ii++)
+            {
+                $this->orderItems[$i]['option_name_'.$ii] = isset($this->ipnData['option_name'.$ii.'_'.$suffix]) ? $this->ipnData['option_name'.$ii.'_'.$suffix] : null;
+                $this->orderItems[$i]['option_selection_'.$ii] = isset($this->ipnData['option_selection'.$ii.'_'.$suffix]) ? $this->ipnData['option_selection'.$ii.'_'.$suffix] : null;
+            }
         }
 
         // And calculate the discount, as it's useful to add this into emails etc
