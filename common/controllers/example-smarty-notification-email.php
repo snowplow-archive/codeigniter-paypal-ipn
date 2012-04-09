@@ -67,7 +67,6 @@ class ExampleSmartyEmailNotification extends Controller {
                 $this->email->subject('Order confirmation');
                 $this->email->message($emailBody);
                 $this->email->send();
-				*/
             }
         }
         else // Just redirect to the root URL
