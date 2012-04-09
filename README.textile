@@ -46,6 +46,11 @@ installation following the same folder structure as found in GitHub. Then choose
 the @activerecord@ and @doctrine1.2@ folder, and deploy those files into your CodeIgniter
 installation as well.
 
+Please note that two different example controllers are provided: one which performs no
+notification following a successful order, and one which sends an order confirmation
+email via Smarty. Choose whichever of these example controllers fits your business requirements
+best, or create your own custom one (e.g. using a Twig email template instead of a Smarty one).
+
 Check that csrf_protection in your CodeIgniter is switched off (disclaimer: the author Alex Dean
 accepts no responsibility for issues arising from disabling csrf_protection).
 
