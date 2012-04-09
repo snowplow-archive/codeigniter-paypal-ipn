@@ -38,6 +38,15 @@ class Example extends Controller {
             // Now let's check what the payment status is and act accordingly
             if ($this->paypal_ipn->orderStatus == PayPal_IPN::PAID)
             {
+    		
+			   /*	
+			    *	UNCOMMENT BELOW IN ORDER TO USE EMAIL NOTIFICATIONS 
+				* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+				*	You'll have to create your own email template using Smarty, Twig or similar for this to work, uncommenting will cause your Paypal IPN
+				*	responses to fail without your knowledge.
+				*/
+				
+				/*
                 // Configure to send HTML emails.
                 $this->load->library('email');
                 $mail_config['mailtype'] = 'html';
@@ -57,6 +66,7 @@ class Example extends Controller {
                 $this->email->subject('Order confirmation');
                 $this->email->message($emailBody);
                 $this->email->send();
+				*/
             }
         }
         else // Just redirect to the root URL
