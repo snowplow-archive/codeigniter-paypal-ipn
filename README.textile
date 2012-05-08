@@ -5,7 +5,9 @@ h2. Overview
 codeigniter-paypal-ipn is a CodeIgniter library for working with the PayPal IPN (Instant
 Payment Notification) service. The library acts as a listener for the PayPal IPN service
 and logs the orders to your database using either Doctrine or CodeIgniter active record.
-(This library is also available for Symfony2 - please see the "symfony2-paypal-ipn":https://github.com/orderly/symfony2-paypal-ipn repo).
+
+
+This library is also available for Symfony2 - please see the "symfony2-paypal-ipn":https://github.com/orderly/symfony2-paypal-ipn repo.
 
 h2. Description
 
