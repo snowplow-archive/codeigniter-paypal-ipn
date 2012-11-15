@@ -66,8 +66,11 @@ class Ipn_order_model extends CI_Model
         foreach ($orderItems as $item)
         {
             // Define the order item query
-            $orderItemQuery = array('item_name' => $item['item_name'],
-                                    'order_id'  => $orderID);
+            $orderItemQuery = array(
+                'item_name' => $item['item_name'],
+                'item_number' => $item['item_number'],
+                'order_id'  => $orderID
+            );
 
             // Add the order ID and datestamp into the item to update/insert
             $item['order_id'] = $orderID;
